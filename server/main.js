@@ -16,7 +16,7 @@ jugador[0] = new jug("Jugador1", 0, ".piezajug1", 1500);
 jugador[1] = new jug("Jugador2", 0, ".piezajug2", 1500);
 
 //Variables
-colores = ["red", "blue", "green", "yelow"];
+colores = ["red", "lightblue"];
 suertecaja = [2,7,17,22,33,36];
 casillasesp = [0,4,10,20,30,38];
 impuestos = 0;
@@ -53,6 +53,7 @@ io.on('connection', function(socket) {
 			arrayid.push(socket.id);
 			arrayips.push(address.address);
 			socket.emit("nombre", jugador[arrayips.length-1].getNom(), colores[arrayips.length-1], jugador[arrayips.length-1].getdinero());
+			io.sockets.emit("torn", turno);
 			console.log("Usuario conectado");
 		}
 		//io.to(arrayid[0]).emit("emision");
@@ -257,7 +258,8 @@ io.on('connection', function(socket) {
 			turno++;
 			if(turno == 2){
 				turno = 0;
-			}	
+			}
+			io.sockets.emit("torn", turno);
 		}
 	});
 
@@ -305,7 +307,7 @@ io.on('connection', function(socket) {
 						jugador[1].comprar(elem.precio, elem.num);
 						socket.emit("compra.definitiva", jugador[1].getdinero());
 						io.sockets.emit("desbloquear");
-						io.sockets.emit("colorjugador", "blue", jugador[1].getid());
+						io.sockets.emit("colorjugador", "lightblue", jugador[1].getid());
 					}
 				}else{
 					if(jugador[0].getdinero()<elem.precio){
@@ -314,7 +316,7 @@ io.on('connection', function(socket) {
 						jugador[turno-1].comprar(elem.precio, elem.num);
 						socket.emit("compra.definitiva", jugador[turno-1].getdinero());
 						io.sockets.emit("desbloquear");
-						io.sockets.emit("colorjugador", "red", jugador[0].getid());
+						io.sockets.emit("colorjugador", "lightblue", jugador[0].getid());
 					}
 				}
 			}); 

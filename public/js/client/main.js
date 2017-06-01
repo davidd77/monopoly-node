@@ -10,6 +10,14 @@ socket.on("nombre", function(data, color, dinero){
 	$(".marcador").css("background-color", color);
 });
 
+socket.on("torn", function(torn){
+	if(torn==0){
+		document.getElementsByClassName("torn")[0].innerHTML = "Es el torn del Jugador1";
+	}else{
+		document.getElementsByClassName("torn")[0].innerHTML = "Es el torn del Jugador2";
+	}
+})
+
 //Inicio piezas
 socket.on("posiciones", function(data){
 	$(".piezajug1").css("margin-left", data[0][0]);
