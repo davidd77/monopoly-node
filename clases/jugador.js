@@ -13,6 +13,8 @@ class Jugador{
 		this.enjuego = true; //Variable para saber si ha perdido o no
 		this.estadocasilla = []; //Array para saber el estado de una propiedad
 		this.cont = 0; //Contador para las array
+		this.casa = 0;
+		this.hotel = 0;
 	}
 
 	getNom(){ //Devuelve el nombre del jugador
@@ -162,5 +164,11 @@ class Jugador{
 	}
 	cobraralquiler(num){ //Actualiza el dinero
 		this.dinero = this.dinero + num;
+	}
+	getcasa(){
+		return this.casa;
+	}
+	gethotel(){
+		return this.hotel;
 	}
 };

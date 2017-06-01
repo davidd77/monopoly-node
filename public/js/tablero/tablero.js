@@ -6,7 +6,7 @@ window.onload=function(){
 
 function snapcasilla(color, id){ //Funcion para mostrar la marca identificativa en el tablero al comprar una propiedad
 	if(id<=10){
-		propiedades.push(identificador.text(arraypos[id],760, "P").attr({"fill": color}));
+		propiedades.push(identificador.text(arraypos[id],780, "P").attr({"fill": color}));
 	}else if(id<=20){
 		propiedades.push(identificador.text(35,arraypos[id], "P").attr({"fill": color}));
 	}else if(id<=30){

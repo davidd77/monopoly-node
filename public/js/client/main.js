@@ -1,4 +1,4 @@
-var socket = io.connect("192.168.12.184:8080", { 'forceNew': true}); //Hace connexion con el server
+var socket = io.connect("192.168.1.105:8080", { 'forceNew': true}); //Hace connexion con el server
 
 nombrejug = ""; //variable global donde se guardara el nombre del jugador
 id = null; //variable global donde se guardara la id donde esta el jugador
@@ -262,7 +262,7 @@ function deshipotecar(){ //Funcion al darle click deshipotecar
 //Desconexion
 socket.on("dis", function(nom){ 
 	alert("Ha ganado "+nom+" por desconexion");
-	window.location.replace("http://192.168.12.184:8080");
+	window.location.replace("http://192.168.1.105:8080");
 });
 
 //Identidicador
@@ -280,5 +280,5 @@ socket.on("Error", function(){
 //Fin de la partida
 socket.on("fin-partida", function(nom){
 	alert("Ha ganado "+ nom);
-	window.location.replace("http://192.168.12.184:8080");
+	window.location.replace("http://192.168.1.105:8080");
 });

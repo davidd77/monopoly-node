@@ -314,7 +314,7 @@ io.on('connection', function(socket) {
 						jugador[turno-1].comprar(elem.precio, elem.num); 
 						socket.emit("compra.definitiva", jugador[turno-1].getdinero());
 						io.sockets.emit("desbloquear");
-						io.sockets.emit("colorjugador", "lightblue", jugador[0].getid());
+						io.sockets.emit("colorjugador", "red", jugador[0].getid());
 					}
 				}
 			}); 
