@@ -48,32 +48,31 @@ app.use("/", ruta);
 //Connection
 io.on('connection', function(socket) {
 	if(arrayips.length < 2){
-		var address = socket.handshake;
-		if(arrayips.length<2){
-			arrayid.push(socket.id);
-			arrayips.push(address.address);
+		var address = socket.handshake; //Se obtiene la IP de quien se acaba de conectar
+		if(arrayips.length<2){ 
+			arrayid.push(socket.id); //Se añade la ID a la array
+			arrayips.push(address.address); //Se añade la IP a la array
 			socket.emit("nombre", jugador[arrayips.length-1].getNom(), colores[arrayips.length-1], jugador[arrayips.length-1].getdinero());
 			io.sockets.emit("torn", turno);
 			console.log("Usuario conectado");
 		}
-		//io.to(arrayid[0]).emit("emision");
 	}else{
 		console.log("Limite superado");
-		socket.emit("nombre", "Espectador", "white", 0);
+		socket.emit("nombre", "Espectador", "white", 0); //Espectador cuando la array esta completa
 	}
 
-	socket.emit("posiciones", mov);
-	socket.emit("messages", messages);
+	socket.emit("posiciones", mov); //Muestra las casillas en la posicion donde se encuentre en ese momento de la partida
+	socket.emit("messages", messages); //Muestra los mensajes del chat
 
 	//Chat
 	console.log('Alguien se ha conectado con Sockets');
 	console.log(arrayips);
 	console.log(arrayid);
-	socket.on('new.message', function(data){
+	socket.on('new.message', function(data){ //Funcion para guardar en la base de dados el mensaje enviado en el chat
 			messages.push(data);
 			var mensaje = new Msg({autor:data.author, texto:data.text}); 
 			mensaje.save(function(err){ console.log(err); });
-			io.sockets.emit("messages", messages);
+			io.sockets.emit("messages", messages); //Mostrar a todos el mensaje enviado
 	});
 
 
@@ -82,7 +81,7 @@ io.on('connection', function(socket) {
 		var address = socket.handshake;
 		if(arrayips[turno] == address.address){
 
-			//Movimiento
+			//Movimiento depende la posicion donde se encuentre el jugador el movimiento sera uno de los predeterminados a continuacion
 			if(jugador[turno].getid()<10){
 				if(jugador[turno].getid()==9 && data == 12){
 					jugador[turno].setid(data);
@@ -155,7 +154,7 @@ io.on('connection', function(socket) {
 				}
 			}
 			url = "";
-			Cas.find({num:jugador[turno].getid()}, function(err, casnumber){ 
+			Cas.find({num:jugador[turno].getid()}, function(err, casnumber){ //Se muestra la casilla donde a caido el jugador con esta llamada a la base de dados
 				casnumber.map(function(elem, index){ 
 					socket.emit("mostrar-casilla", elem.url);
 				}); 
@@ -168,13 +167,13 @@ io.on('connection', function(socket) {
 					if(suertecaja[x] == 2 || suertecaja[x] == 17 || suertecaja[x] == 33){
 						caja.find({num:num}, function(err, alnumber){
 							alnumber.map(function(elem, index){
-								socket.emit("caja", elem.Nombre , num);
+								socket.emit("caja", elem.Nombre , num); //Si ha caido en una casilla de caja mandara a la funcion donde se aplicara el efecto
 							});
 						});
 					}else{
 						suerte.find({num:num}, function(err, alnumber){
 							alnumber.map(function(elem, index){
-								socket.emit("suerte", elem.Nombre, num);
+								socket.emit("suerte", elem.Nombre, num); //Si ha caido en una casilla de suerte mandara a la funcion donde se aplicara el efecto
 							});
 						});
 					}
@@ -222,12 +221,10 @@ io.on('connection', function(socket) {
 			if(sc != true && cesp!=true){
 				var propiedadjug1 = jugador[0].comprobarpropiedadhipotecada(jugador[turno].getid());
 				var propiedadjug2 = jugador[1].comprobarpropiedadhipotecada(jugador[turno].getid());
-				console.log(propiedadjug1);
-				console.log(propiedadjug2);
-				if(propiedadjug1==0 && propiedadjug2==0){
+				if(propiedadjug1==0 && propiedadjug2==0){ //Comprueba si la casilla tiene propietario si no tiene entrada en este if
 					socket.emit("comprar", jugador[turno].getid());
 					io.sockets.emit("bloquear");
-				}else{
+				}else{ //Si tiene propietario entrara aqui i se comprobara si tiene que pagar alquiler o no
 					precios.find({num:jugador[turno].getid()}, function(err, alnumber){
 							alnumber.map(function(elem,index){
 								if(propiedadjug1 == 2){
@@ -255,15 +252,16 @@ io.on('connection', function(socket) {
 						});
 				}
 			}
+			//Cambia automaticamente de turno una vez el jugador que es su turno le da a los dados
 			turno++;
 			if(turno == 2){
 				turno = 0;
 			}
-			io.sockets.emit("torn", turno);
+			io.sockets.emit("torn", turno); //Actualiza el mensaje de turnos en el marcador
 		}
 	});
 
-	//Buscar casilla
+	//Buscar casilla en el buscador del panel lateral
 	socket.on("buscar.casilla", function(id){
 		Cas.find({num:id}, function(err, casnumber){ 
 			casnumber.map(function(elem, index){ 
@@ -273,7 +271,7 @@ io.on('connection', function(socket) {
 	})
 
 
-	//Usuario desconectado
+	//Usuario desconectado, se reinician las variables que se utilizan durante la partida
 	socket.on("disconnect", function(){
 		var address = socket.handshake;
 		var dis = arrayips.indexOf(address.address);
@@ -301,19 +299,19 @@ io.on('connection', function(socket) {
 			casnumber.map(function(elem, index){ 
 
 				if(turno == 0){
-					if(jugador[1].getdinero()<elem.precio){
+					if(jugador[1].getdinero()<elem.precio){//Comprueba si tiene dinero
 						socket.emit("Error");
-					}else{
+					}else{ //El jugador compra la propedad
 						jugador[1].comprar(elem.precio, elem.num);
 						socket.emit("compra.definitiva", jugador[1].getdinero());
 						io.sockets.emit("desbloquear");
 						io.sockets.emit("colorjugador", "lightblue", jugador[1].getid());
 					}
 				}else{
-					if(jugador[0].getdinero()<elem.precio){
-						socket.emit("Error");
-					}else{
-						jugador[turno-1].comprar(elem.precio, elem.num);
+					if(jugador[0].getdinero()<elem.precio){ //Comprueba si tiene dinero
+						socket.emit("Error"); 
+					}else{ //El jugador compra la propiedad
+						jugador[turno-1].comprar(elem.precio, elem.num); 
 						socket.emit("compra.definitiva", jugador[turno-1].getdinero());
 						io.sockets.emit("desbloquear");
 						io.sockets.emit("colorjugador", "lightblue", jugador[0].getid());
@@ -330,7 +328,7 @@ io.on('connection', function(socket) {
 		io.sockets.emit("desbloquear");
 	});
 
-	//Activar accion de suerte
+	//Activar accion de suerte, depende el numero random que se le pasa por parametro el efecto sera uno o otro
 	socket.on("suerte-emision", function(num){
 		if(num==0){
 			if(turno==0){
@@ -419,7 +417,7 @@ io.on('connection', function(socket) {
 	});
 
 
-	//Activar accion de caja
+	//Activar accion de caja, depende el numero pasado por parametro el efecto sera uno o otro
 	socket.on("caja-emision", function(num){
 		if(num==0){
 			if(turno==0){
@@ -515,7 +513,7 @@ io.on('connection', function(socket) {
 		}
 	});
 
-	//Hipoteca
+	//Hipoteca, se comprueba si es su turno si la casilla cuya id se pasa por parametro es de su propiedad y que no este hipotecada
 	socket.on("hipotecar", function(id){
 		var address = socket.handshake;
 		if(arrayips[turno] == address.address){
@@ -541,7 +539,7 @@ io.on('connection', function(socket) {
 		}
 	});
 
-	//deshipoteca
+	//deshipoteca, se comprueba que sea su turno, que la propiedad que se pasa por parametro sea suya, que este hipotecada y que tenga dinero para pagarla
 	socket.on("deshipotecar", function(id){
 		var address = socket.handshake;
 		if(arrayips[turno] == address.address){

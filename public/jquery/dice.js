@@ -1,16 +1,18 @@
+//Este archivo es para la accion de los dados
+
 $(function(){
-	var dice = $("#dice");
-	var dice2 = $("#dice2");
-	var button = $("#result");
-	button.click(function(){
-		$(".wrap").css("display", "block");
-		$(".wrap").append("<div id='dice_mask'></div>");//add mask
-		dice.attr("class","dice");//After clearing the last points animation
+	var dice = $("#dice"); //Se guarda el dado 1
+	var dice2 = $("#dice2"); //Se guarda el dado 2
+	var button = $("#result"); //Se guarda el boton de los dados
+	button.click(function(){ //Accion click en el boton
+		$(".wrap").css("display", "block"); //Muestra los dados
+		$(".wrap").append("<div id='dice_mask'></div>"); //Empieza la animacion
+		dice.attr("class","dice");
 		dice.css('cursor','default');
-		dice2.attr("class","dice");//After clearing the last points animation
+		dice2.attr("class","dice");
 		dice2.css('cursor','default');
 		var num = Math.floor(Math.random()*6+1);
-		var num2 = Math.floor(Math.random()*6+1);//random num 1-6
+		var num2 = Math.floor(Math.random()*6+1);
 		var rotaciondado1 = Math.floor(Math.random()*3+1);
 		var rotaciondado2 = Math.floor(Math.random()*3+1);
 		if(rotaciondado1 == 1){
@@ -87,9 +89,9 @@ $(function(){
 				$("#dice_mask").remove();//remove mask
 			});
 		}
-		setTimeout(function(){
+		setTimeout(function(){ //A los 3 segundos vuelve invisible los dados
 			$(".wrap").css("display", "none");
 		}, 3000);
-		mover(num, num2);
+		mover(num, num2); //Envia el resultado de los dados al cliente
 	});
 });
