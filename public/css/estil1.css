@@ -1,0 +1,97 @@
+.wrap{width:105px; height:105px; margin:40px auto 30px auto; position:relative} 
+.dice{width:105px; height:105px; background:url("../img/dice.png") no-repeat;} 
+.dice_1{background-position:-2px -4px} 
+.dice_2{background-position:-109px -4px} 
+.dice_3{background-position:-216px -4px} 
+.dice_4{background-position:-323px -4px} 
+.dice_5{background-position:-430px -4px} 
+.dice_6{background-position:-537px -4px} 
+.dice_t{background-position:-109px -4px} 
+.dice_s{background-position:-323px -4px} 
+.dice_e{background-position:-537px -4px} 
+.dice_t1{background-position:-216px -4px} 
+.dice_s1{background-position:-430px -4px} 
+.dice_e1{background-position:-2px -4px} 
+.dice_t2{background-position:-323px -4px} 
+.dice_s2{background-position:-2px -4px} 
+.dice_e2{background-position:-537px -4px} 
+#result{text-align:center; font-size:16px} 
+#result span{font-weight:bold; color:#f30; margin:6px} 
+#dice_mask{width:90px; height:90px; background:#fff; opacity:0; position:absolute; 
+ top:0; left:0; z-index:999}
+
+
+
+.piezajug1{
+	position: absolute;
+}
+.piezajug2{
+	position: absolute;
+}
+
+.tablero{
+	width: 800px;
+	position: absolute;
+}
+.piezajug2{
+	width: 55px;
+}
+.piezajug1{
+	width: 55px;
+}
+
+#propiedades{
+position: absolute;
+float: right;
+width: 800px;
+height: 800px;
+font-size: 70px;
+}
+
+.centro{
+	height: 800px !important;
+	padding: 0 60px 0 60px !important;
+}
+
+.marcador{
+	text-align: center;
+}
+
+.lat-izq{
+	margin: 0 !important; 
+	padding: 0 !important;
+}
+
+.lat-der{
+	float: right;
+}
+
+.row{
+	width: 100% !important;
+}
+
+.wrap{
+	width: 105px;
+}
+
+.dados{
+	margin: 15px 0 0 0 !important;
+	padding: 0 !important;
+}
+
+#messages{
+	height: 700px;
+	overflow-y: auto;
+}
+
+.compras{
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+@media (max-width: 1000px){
+	.mostrar-casilla{
+		margin-left: 35%;
+	}
+}
+

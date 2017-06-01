@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ../partials/head %>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/estilindex.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="img-title">
+			<img class="title" style="width: 1000px;" src="img/monopolylogo.png">
+		</div>
+	</div>
+	<div class="row">
+		<div class="lat-izq col-lg-2 col-md-12 col-sm-12">
+			<div class="container button-index">
+				<a href="/partida"><button type="button" class="btn btn-success btn-lg">Empezar partida</button></a>	
+				<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Instrucciones</button>
+				<div class="container">
+ 				<!-- Trigger the modal with a button -->
+  				
+  				<!-- Modal -->
+  				<div class="modal fade" id="myModal" role="dialog">
+    				<div class="modal-dialog">
+    				    <!-- Modal content-->
+				      	<div class="modal-content">
+				        	<div class="modal-header">
+				          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+				          		<h4 class="modal-title">Instrucciones</h4>
+				        	</div>
+				        	<div class="modal-body">
+				          		<p>
+				          			Para 2 Jugadores
+				          		</p>
+				          		<p>
+				          			Los 2 jugadores empiezan con una cantidad de 1500€.
+				          		</p>
+				          		<p>
+				          			El primer jugador conectado tendra el primer turno. Los turnos se cambian automaticamente una vez se le ha dado a los dados, si se quiere hacer algun movimiento como hipotecar se tendra que hacer antes de darle a los dados.<br/>
+
+									Cuando un jugador caiga en una casilla sin propietario tendra la opcion de comprar y no comprar. Si se intenta comprar cuando no tienes suficiente dinero no se le dejara comprar.<br/>
+
+									Cuando un jugador caiga en una casilla con propietario se comprobara si es suya o del otro jugador. Si es suya no pasara nada pero si es del otro jugador se le cobrara automaticamente el dinero y el otro jugador lo cobrara.<br/>
+
+									Un jugador solo puede hipotecar las propiedades que tenga compradas y deshipotecar las propiedades que tenga hipotecadas.<br/>
+
+									La partida acabara cuando uno de los 2 se desconecte o llege a una cantidad de dinero negativo. No se le dara la opcion de hipotecar antes de perder la partida hay que ser previsor y hipotecar antes de lanzar los dados si se cree que se puede perder la partida en la siguiente jugada.<br/>
+
+									En todo momento los jugadores y espectadores podran hablar entre ellos en el chat que se encuentra en el lateral derecho del tablero.
+				          		</p>
+				        	</div>
+				        	<div class="modal-footer">
+				          		<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        	</div>
+				      	</div>
+				    </div>
+</div>
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ../partials/head %>
+	<link rel="stylesheet" type="text/css" href="css/estil1.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<script src="/librerias/snap.svg-min.js" charset="utf-8"></script>
+	<script src="/js/tablero/tablero.js" charset="utf-8"></script>
+	<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+	<script src="/js/client/main.js" charset="utf-8"></script>
+	<script src="/librerias/jquery-3.1.1.min.js" charset="utf-8"></script>
+	<script src="/jquery/dice.js"></script>
+	<script src="/jquery/functions.js"></script>
+</head>
+<body>
+<div class="container row">
+	<div class="lat-izq col-lg-2 col-md-12 col-sm-12">
+		<div class="marcador">
+			<div class="marcador1"></div>
+			<div class="cantidad"></div>
+		</div>
+		
+	    <div class="buscador">
+	    	<button class="hipotecar btn btn-danger col-lg-6 col-md-6 col-sm-6">Hipotecar</button>
+	    	<button class="deshipotecar btn btn-success col-lg-6 col-md-6 col-sm-6">Deshipotecar</button>
+		    <form class="form-buscar" onchange="return addbuscar(this)">
+		    	<select class="form-control">
+		    	  <option value="0">Elige una casilla</option>
+				  <option value="1">Ronda de Valencia</option>
+				  <option value="3">Plaza Lavapiés</option>
+				  <option value="5">Estación de Goya</option>
+				  <option value="6">Glorieta Cuatro Caminos</option>
+				  <option value="8">Avenida de Reina Victoria</option>
+				  <option value="9">Calle Bravo Murillo</option>
+				  <option value="11">Glorieta de Bilbao</option>
+				  <option value="12">Compañia de la electricidad</option>
+				  <option value="13">Calle Alberto Aguilera</option>
+				  <option value="14">Calle Fuencarral</option>
+				  <option value="15">Estación de las Delicias</option>
+				  <option value="16">AVDA Felipe II</option>
+				  <option value="18">Calle Velázquez</option>
+				  <option value="19">Calle Serrano</option>
+				  <option value="21">Avenida de America</option>
+				  <option value="23">Calle María de molina</option>
+				  <option value="24">Calle de Cea Bermúdez</option>
+				  <option value="25">Estación del mediodia</option>
+				  <option value="26">Avenida de los reyes catolicos</option>
+				  <option value="27">Calle Bailén</option>
+				  <option value="28">Compañia distribucion de aguas</option>
+				  <option value="29">Plaza de España</option>
+				  <option value="31">Puerta de Sol</option>
+				  <option value="32">Calle de Alcalá</option>
+				  <option value="34">Gran via</option>
+				  <option value="35">Estación del norte</option>
+				  <option value="37">Paseo de la Castellana</option>
+				  <option value="39">Paseo del Prado</option>
+				</select> 
+			</form>
+		    <img class="buscar" src=""> 
+	    </div>
+	    <div class="row compras">
+	    	<button class="comprar btn btn-success col-lg-6 col-md-6 col-sm-6" disabled>Comprar</button>
+			<button class="nocomprar btn btn-danger col-lg-6 col-md-6 col-sm-6" disabled>No Comprar</button>
+	    	<img class="mostrar-casilla" src="/img/casillas/salida.jpg">
+	    </div>
+	    
+	    <div class="row dados">
+	    	<button class="btn btn-warning col-lg-12 col-md-12 col-sm-12" type="button" id="result">Dados</button>
+			<div class="wrap" style="display: none;">
+	   			<div id="dice" class="dice dice_1 col-lg-12"></div>
+	   			<div id="dice2" class="dice dice_1 col-lg-12"></div>
+	    	</div>
+	    </div>
+	</div>
+	<div class="centro col-lg-6 col-md-12 col-sm-12">
+    	<div class="tab-piezas">
+			<img class="tablero" src="/img/tablero-Monopoly.jpg">
+			<img class="piezajug1" src="/img/pieza1.png">
+			<img class="piezajug2" src="/img/pieza2.png">
+		</div>
+		<svg id="propiedades"></svg>
+	</div>
+
+	<div class="lat-der col-lg-4 col-md-12 col-sm-12">
+		<div class="row col-lg-12">
+			<div class="col-lg-12" id="messages"></div>	
+		</div>
+		<div class="row col-lg-12">
+			<form class="chat" onsubmit="return addMessage(this)">
+				<input class="chattext col-lg-6 form-control" type="text" id="texto" placeholder="Cuéntanos algo..">
+				<input class="chattext col-lg-4 btn btn-primary" id="mess" type="submit" value="Enviar!">
+			</form>
+		</div>	
+		
+	</div>
+</div>
+</body>
+</html>
